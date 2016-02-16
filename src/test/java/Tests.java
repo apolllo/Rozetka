@@ -24,7 +24,7 @@ public class Tests {
 
     @Test(priority=2)
     public void alwaysFailingTest() {
-        if (rozetka.getTitle() != "Результаты поиска") {
+        if (!rozetka.getTitle().equals("Результаты поиска")) {
             rozetka.screen();
             fail("Page title should be as expected");
         }
@@ -32,7 +32,6 @@ public class Tests {
 
     @Test(priority=4)
     public void loginPositive() {
-        //RozetkaPage r = new RozetkaPage("https://my.rozetka.com.ua/signin/");
         rozetka.login("a.tst.gml123@gmail.com", "tstPwd987");
         String expectedTitle = "ROZETKA — Личные данные | Личный кабинет";
         assertEquals(rozetka.getTitle(), expectedTitle, "Page title should be as expected");
@@ -40,7 +39,6 @@ public class Tests {
 
     @Test(priority=3)
     public void loginNegative() {
-        //RozetkaPage r = new RozetkaPage("https://my.rozetka.com.ua/signin/");
         rozetka.getRequest("https://my.rozetka.com.ua/signin/");
         rozetka.login("a.tst.gml123@gmail.com", "");
         String expectedStyle = "background-color: rgb(255, 254, 254);";
