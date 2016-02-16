@@ -24,7 +24,7 @@ public class Tests {
 
     @Test(priority=2)
     public void alwaysFailingTest() {
-        if (!rozetka.getTitle().equals("Результаты поиска")) {
+        if (rozetka.getTitle().contains("Результаты поиска")) {
             rozetka.screen();
             fail("Page title should be as expected");
         }
