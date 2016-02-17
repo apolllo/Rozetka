@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverUtils {
     private static WebDriver driver;
@@ -57,12 +58,15 @@ public class WebDriverUtils {
         new File(projectDir + "/temp").mkdir();
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         long date = new Date().getTime();
-        System.out.println(date);
         try {
             FileUtils.copyFile(scrFile, new File(projectDir + "/temp/screenshot" + date + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void sleep(long seconds) {
+        driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
     public void cleanup() {

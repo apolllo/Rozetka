@@ -1,4 +1,5 @@
 import Utils.RozetkaPage;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
 
@@ -25,7 +26,6 @@ public class Tests {
     @Test(priority=2)
     public void alwaysFailingTest() {
         if (rozetka.getTitle().contains("Результаты поиска")) {
-            rozetka.screen();
             fail("Page title should be as expected");
         }
     }
@@ -42,7 +42,17 @@ public class Tests {
         rozetka.getRequest("https://my.rozetka.com.ua/signin/");
         rozetka.login("a.tst.gml123@gmail.com", "");
         String expectedStyle = "background-color: rgb(255, 254, 254);";
+        assertEquals(rozetka.getPasswordField().getAttribute("style"), expectedStyle, "Password should blink red when incorrect password is submitted");
+        rozetka.sleep(10);
+        expectedStyle = "background-color: rgb(255, 214, 214);";
         assertEquals(rozetka.getPasswordField().getAttribute("style"), expectedStyle, "Password should be coloured red when incorrect password is submitted");
+    }
+
+    @AfterMethod
+    public void caseTeardown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            rozetka.screen();
+        }
     }
 
     @AfterClass

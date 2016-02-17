@@ -31,8 +31,7 @@ public class RozetkaPage {
     }
 
     public void setLoginField(String login) {
-        this.loginField = getLoginField();
-        this.loginField.sendKeys(login);
+        getLoginField().sendKeys(login);
     }
 
     public WebElement getPasswordField() {
@@ -41,7 +40,7 @@ public class RozetkaPage {
     }
 
     public void setPasswordField(String password) {
-        this.passwordField.sendKeys(password);
+        getPasswordField().sendKeys(password);
     }
 
     public void search(String searchText) {
@@ -65,9 +64,13 @@ public class RozetkaPage {
     }
 
     public void login(String login, String password) {
-        this.loginField.sendKeys(login);
-        this.passwordField.sendKeys(password);
+        setLoginField(login);
+        setPasswordField(password);
         this.passwordField.submit();
+    }
+
+    public void sleep(long seconds) {
+        webdriver.sleep(seconds);
     }
 
     public void screen() {
