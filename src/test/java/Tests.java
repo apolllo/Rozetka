@@ -32,6 +32,7 @@ public class Tests {
 
     @Test(priority=4)
     public void loginPositive() {
+        rozetka.getRequest("https://my.rozetka.com.ua/signin/");
         rozetka.login("a.tst.gml123@gmail.com", "tstPwd987");
         String expectedTitle = "ROZETKA — Личные данные | Личный кабинет";
         assertEquals(rozetka.getTitle(), expectedTitle, "Page title should be as expected");
@@ -43,7 +44,11 @@ public class Tests {
         rozetka.login("a.tst.gml123@gmail.com", "");
         String expectedStyle = "background-color: rgb(255, 254, 254);";
         assertEquals(rozetka.getPasswordField().getAttribute("style"), expectedStyle, "Password should blink red when incorrect password is submitted");
-        rozetka.sleep(10);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         expectedStyle = "background-color: rgb(255, 214, 214);";
         assertEquals(rozetka.getPasswordField().getAttribute("style"), expectedStyle, "Password should be coloured red when incorrect password is submitted");
     }
